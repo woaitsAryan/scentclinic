@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { PrescriptionSchema } from "@/lib/schema/prescription";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 
