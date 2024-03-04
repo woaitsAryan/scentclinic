@@ -5,40 +5,44 @@ import Image from "next/image";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import FieldModal from "../components/FieldModal";
-const ReportBase = () => {
-  const curr_labels = [
-    "Right Naasal Cavity",
-    "Inferior Turbinate & Meatus",
-    "Middle Turbinate & Meatus",
-    "Uncinate Process",
-    "Superior Turbinate & Meatus",
-    "Sphenoethmoidal Recess",
-    "Left Nasal Cavity",
-    "Inferior Turbinate & Meatus",
-    "Middle Turbinate & Meatus",
-    "Uncinate Process",
-    "Superior Turbinate & Meatus",
-    "Sphenoethmoidal Recess",
-    "Bulla",
-    "Septum",
-    "Nasopharynx",
-    "Roof",
-    "Posterior Wall",
-    "Eustachian Tube Orifice",
-    "Interpretation",
-    "Impression",
-  ];
+
+const ReportBase = ({
+  save,
+  setSave,
+  reportName,
+}: {
+  save: boolean;
+  setSave: React.Dispatch<React.SetStateAction<boolean>>;
+  reportName: string;
+}) => {
   const [zoom, setZoom] = useState(0);
   const [zoomVal, setZoomVal] = useState(50);
   const [savePdf, setSavePdf] = useState(false);
   const [addNewField, setAddNewField] = useState(false);
   const [labels, setLabels] = useState<string[]>(curr_labels);
+  const [patientData, setPatientData] = useState({
+    patient_name: "",
+    age: "",
+    sex: "",
+  });
+  const [reportData, setReportData] = useState({});
   useEffect(() => {
     if (zoomVal === 50 && zoom === 0) return;
     else {
       setZoomVal(50 + 10 * zoom);
     }
   }, [zoom]);
+  useEffect(() => {
+    if (save) {
+      const data = {
+        reportName,
+        patientData,
+        reportData,
+      };
+      console.log(data);
+      setSave(false);
+    }
+  }, [save]);
   const generatePdf = async () => {
     const element = document.getElementById("pdf-content"); // Replace with your actual div ID
 
@@ -55,7 +59,7 @@ const ReportBase = () => {
           pdf.internal.pageSize.height,
           "NONE"
         );
-        pdf.save("your-file-name.pdf");
+        pdf.save(reportName);
       } catch (error) {
         console.error("Error generating PDF:", error);
       }
@@ -65,9 +69,8 @@ const ReportBase = () => {
   };
   useEffect(() => {
     (async () => {
-      if (savePdf && zoom === 5) {
+      if (savePdf && zoom === 4) {
         generatePdf();
-        // setZoom(2);
         setSavePdf(false);
       }
     })();
@@ -119,6 +122,12 @@ const ReportBase = () => {
                   id=""
                   autoComplete="off"
                   className="w-full h-full outline-none"
+                  onChange={(e) =>
+                    setPatientData({
+                      ...patientData,
+                      patient_name: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="flex gap-2 h-full items-center w-fit">
@@ -129,6 +138,12 @@ const ReportBase = () => {
                   id=""
                   autoComplete="off"
                   className="w-16 h-full outline-none"
+                  onChange={(e) =>
+                    setPatientData({
+                      ...patientData,
+                      age: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="flex gap-2 h-full items-center w-fit">
@@ -139,6 +154,12 @@ const ReportBase = () => {
                   id=""
                   autoCapitalize="off"
                   className="w-16 h-full outline-none"
+                  onChange={(e) =>
+                    setPatientData({
+                      ...patientData,
+                      sex: e.target.value,
+                    })
+                  }
                 />
               </div>
             </div>
@@ -157,6 +178,9 @@ const ReportBase = () => {
                   name={label}
                   autoCapitalize="off"
                   className="w-full h-full outline-none"
+                  onChange={(e) =>
+                    setReportData({ ...reportData, [label]: e.target.value })
+                  }
                 />
               </div>
             ))}
@@ -187,3 +211,25 @@ const ReportBase = () => {
 };
 
 export default ReportBase;
+const curr_labels = [
+  "Right Naasal Cavity",
+  "Inferior Turbinate & Meatus",
+  "Middle Turbinate & Meatus",
+  "Uncinate Process",
+  "Superior Turbinate & Meatus",
+  "Sphenoethmoidal Recess",
+  "Left Nasal Cavity",
+  "Inferior Turbinate & Meatus",
+  "Middle Turbinate & Meatus",
+  "Uncinate Process",
+  "Superior Turbinate & Meatus",
+  "Sphenoethmoidal Recess",
+  "Bulla",
+  "Septum",
+  "Nasopharynx",
+  "Roof",
+  "Posterior Wall",
+  "Eustachian Tube Orifice",
+  "Interpretation",
+  "Impression",
+];

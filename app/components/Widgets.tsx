@@ -52,7 +52,7 @@ const Widgets = ({ zoom, setZoom, setSavePdf, setAddNewField }: Props) => {
       <div
         className="p-2 hover:bg-base rounded-lg flex justify-center relative"
         onClick={() => {
-          setZoom(5);
+          setZoom(4);
           setSavePdf(true);
         }}
         onMouseOver={() => setTooltip(2)}
@@ -66,20 +66,6 @@ const Widgets = ({ zoom, setZoom, setSavePdf, setAddNewField }: Props) => {
           </div>
         )}
       </div>
-      {/* <div
-        className="p-2 hover:bg-base rounded-lg flex justify-center relative cursor-pointer"
-        onClick={() => setAddNewField(true)}
-        onMouseOver={() => setTooltip(3)}
-        onMouseOut={() => setTooltip(-1)}
-      >
-        <GoPlus size={20} />
-        {tooltip === 3 && (
-          <div className="tooltip bg-[#232323] text-sm text-white rounded-md px-3 py-1 absolute -translate-x-[90%] top-1/2 -translate-y-1/2 text-nowrap ">
-            <p>Add new field</p>
-            <div className="tip bg-[#232323] w-2 h-2 rotate-45 absolute -right-1 top-1/2 -translate-y-1/2"></div>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };
