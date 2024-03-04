@@ -18,7 +18,14 @@
     "next-auth": "^4.24.6",
     "react": "^18",
     "react-dom": "^18",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "clipboard-copy": "^4.0.1",
+    "html2canvas": "^1.4.1",
+    "html2pdf-ts": "^1.1.1",
+    "html2pdf.js": "^0.9.0",
+    "jspdf": "^2.5.1",
+    "pdf-lib": "^1.17.1",
+    "react-icons": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
