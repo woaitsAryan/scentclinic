@@ -5,6 +5,18 @@ import Image from "next/image";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import FieldModal from "../components/FieldModal";
+import axios from 'axios';
+import { toast } from "react-toastify";
+
+type ReportData = {
+  reportName: string;
+  patientData: {
+    patient_name: string;
+    age: string;
+    sex: string;
+  };
+  reportData: Record<string, any>;
+};
 
 const ReportBase = ({
   save,
@@ -34,12 +46,56 @@ const ReportBase = ({
   }, [zoom]);
   useEffect(() => {
     if (save) {
-      const data = {
+      const data: ReportData = {
         reportName,
         patientData,
         reportData,
       };
-      console.log(data);
+      console.log(data)
+      console.log(data.reportData)
+      console.log('hi')
+
+      const actualdata = {
+        Right_Naasal_Cavity: data.reportData['Right Naasal Cavity'],
+        Inferior_Turbinate_and_Meatus: data.reportData['Inferior Turbinate & Meatus'],
+        Middle_Turbinate_and_Meatus: data.reportData['Middle Turbinate & Meatus'],
+        Uncinate_Process: data.reportData['Uncinate Process'],
+        Superior_Turbinate_and_Meatus: data.reportData['Superior Turbinate & Meatus'],
+        Sphenoethmoidal_Recess: data.reportData['Sphenoethmoidal Recess'],
+        Left_Nasal_Cavity: data.reportData['Left Nasal Cavity'],
+        Bulla: data.reportData['Bulla'],
+        Septum: data.reportData['Septum'],
+        Nasopharynx: data.reportData['Nasopharynx'],
+        Roof: data.reportData['Roof'],
+        Posterior_Wall: data.reportData['Posterior Wall'],
+        Eustachian_Tube_Orifice: data.reportData['Eustachian Tube Orifice'],
+        Interpretation: data.reportData['Interpretation'],
+        Impression: data.reportData['Impression'],
+      }
+
+      const newData = {
+        reportName,
+        patientData,
+        reportData: actualdata
+      }
+
+      
+
+        axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`, newData, 
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        ).then((res) => {
+          toast.success(res.data.message)
+        }).catch((err) => {
+          toast.error(err.response.data.error)
+        
+        })
+     
+      
+      
       setSave(false);
     }
   }, [save]);

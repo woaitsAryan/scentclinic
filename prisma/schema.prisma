@@ -13,13 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Prescription {
-  id                            String   @id @default(cuid())
-  name                          String
-  premedication                 String
-  right_nasal_cavity            String
-  inferior_turbinate_and_meatus String
-  uncinate_process              String
-  indication                    String
-  createdAt                     DateTime @default(now())
+model Patient {
+  id           String   @id @default(cuid())
+  patient_name String
+  age          String
+  sex          String
+  Reports      Report[]
+}
+
+model Report {
+  id                      String   @id @default(cuid())
+  reportName              String
+  patientID               String
+  patient                 Patient  @relation(fields: [patientID], references: [id])
+  createdAt               DateTime @default(now())
+  rightNasalCavity        String
+  inferiorTurbinateMeatus String
+  middleTurbinateMeatus   String
+  uncinateProcess         String
+  superiorTurbinateMeatus String
+  sphenoethmoidalRecess   String
+  leftNasalCavity         String
+  bulla                   String
+  septum                  String
+  nasopharynx             String
+  roof                    String
+  posteriorWall           String
+  eustachianTubeOrifice   String
+  interpretation          String
+  impression              String
 }

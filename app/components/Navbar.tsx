@@ -10,6 +10,9 @@ interface Props {
   setReportName: React.Dispatch<React.SetStateAction<string>>;
 }
 const Navbar = ({ setSave, reportName, setReportName }: Props) => {
+
+  // const handleSubmit 
+
   return (
     <div className="sticky top-0 left-0 w-full h-20 shadow-lg bg-white z-[100]">
       <div className="w-[80%] h-full mx-auto flex justify-between items-center">
