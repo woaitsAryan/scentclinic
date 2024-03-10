@@ -5,7 +5,7 @@ import Image from "next/image";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import FieldModal from "../components/FieldModal";
-import axios from 'axios';
+import axios from "axios";
 import { toast } from "react-toastify";
 
 type ReportData = {
@@ -22,16 +22,28 @@ const ReportBase = ({
   save,
   setSave,
   reportName,
+  reportType,
+  setReportType,
 }: {
   save: boolean;
   setSave: React.Dispatch<React.SetStateAction<boolean>>;
   reportName: string;
+  reportType: string;
+  setReportType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [zoom, setZoom] = useState(0);
   const [zoomVal, setZoomVal] = useState(50);
   const [savePdf, setSavePdf] = useState(false);
   const [addNewField, setAddNewField] = useState(false);
   const [labels, setLabels] = useState<string[]>(curr_labels);
+
+  useEffect(() => {
+    if (reportType === "Nose") {
+      setLabels(curr_labels);
+    } else {
+      setLabels(ear_labels);
+    }
+  }, [reportType]);
   const [patientData, setPatientData] = useState({
     patient_name: "",
     age: "",
@@ -51,51 +63,85 @@ const ReportBase = ({
         patientData,
         reportData,
       };
-      console.log(data)
-      console.log(data.reportData)
-      console.log('hi')
-
+      // console.log(data);
+      // console.log(data.reportData);
+      // console.log("hi");
       const actualdata = {
-        Right_Naasal_Cavity: data.reportData['Right Naasal Cavity'],
-        Inferior_Turbinate_and_Meatus: data.reportData['Inferior Turbinate & Meatus'],
-        Middle_Turbinate_and_Meatus: data.reportData['Middle Turbinate & Meatus'],
-        Uncinate_Process: data.reportData['Uncinate Process'],
-        Superior_Turbinate_and_Meatus: data.reportData['Superior Turbinate & Meatus'],
-        Sphenoethmoidal_Recess: data.reportData['Sphenoethmoidal Recess'],
-        Left_Nasal_Cavity: data.reportData['Left Nasal Cavity'],
-        Bulla: data.reportData['Bulla'],
-        Septum: data.reportData['Septum'],
-        Nasopharynx: data.reportData['Nasopharynx'],
-        Roof: data.reportData['Roof'],
-        Posterior_Wall: data.reportData['Posterior Wall'],
-        Eustachian_Tube_Orifice: data.reportData['Eustachian Tube Orifice'],
-        Interpretation: data.reportData['Interpretation'],
-        Impression: data.reportData['Impression'],
+        Right_Naasal_Cavity: data.reportData["Right Naasal Cavity"],
+        Inferior_Turbinate_and_Meatus:
+          data.reportData["Inferior Turbinate & Meatus"],
+        Middle_Turbinate_and_Meatus:
+          data.reportData["Middle Turbinate & Meatus"],
+        Uncinate_Process: data.reportData["Uncinate Process"],
+        Superior_Turbinate_and_Meatus:
+          data.reportData["Superior Turbinate & Meatus"],
+        Sphenoethmoidal_Recess: data.reportData["Sphenoethmoidal Recess"],
+        Left_Nasal_Cavity: data.reportData["Left Nasal Cavity"],
+        Bulla: data.reportData["Bulla"],
+        Septum: data.reportData["Septum"],
+        Nasopharynx: data.reportData["Nasopharynx"],
+        Roof: data.reportData["Roof"],
+        Posterior_Wall: data.reportData["Posterior Wall"],
+        Eustachian_Tube_Orifice: data.reportData["Eustachian Tube Orifice"],
+        Interpretation: data.reportData["Interpretation"],
+        Impression: data.reportData["Impression"],
+      };
+      const actualEarData = {
+        Oral_Cavity: data.reportData["Oral Cavity"],
+        Hard_Palate: data.reportData["Hard Palate"],
+        Soft_Palate: data.reportData["Soft Palate"],
+        Uvula: data.reportData["Uvula"],
+        Posterior_Of_Tongue: data.reportData["Posterior 1/3rd of Tongue"],
+        Epiglottis: data.reportData["Epiglottis"],
+        Vallecula: data.reportData["Vallecula"],
+        Pharyngoepiglottic_Fold: data.reportData["Pharyngoepiglottic Fold"],
+        Aryepiglottic_Fold: data.reportData["Aryepiglottic Fold (AE Fold)"],
+        Arytnoids: data.reportData["Arytnoids"],
+        Ventricular_Band: data.reportData["Ventricular Band"],
+        Vocal_Cord: data.reportData["Vocal Cord"],
+        Posterior_Pharyngeal_Wall: data.reportData["Posterior Pharyngeal Wall"],
+        Sub_Glottis: data.reportData["Sub-Glottis"],
+        Other_Findings: data.reportData["Other Findings"],
+        Impression_Throat: data.reportData["Impression"],
+        EAR: data.reportData["EAR"],
+        EAC: data.reportData["EAC"],
+        Tympanic_Membrane: data.reportData["Tympanic Membrane"],
+        Pars_Flaccida: data.reportData["Pars Flaccida"],
+        Pars_Tensa: data.reportData["Pars Tensa"],
+        Impression_Ear: data.reportData["Impression"],
+      };
+      let newData;
+      if (reportType === "Nose") {
+        newData = {
+          reportName,
+          patientData,
+          reportData: actualdata,
+        };
+      } else {
+        newData = {
+          reportName,
+          patientData,
+          reportData: actualEarData,
+        };
       }
-
-      const newData = {
-        reportName,
-        patientData,
-        reportData: actualdata
-      }
-
-      
-
-        axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`, newData, 
-        {
-          headers: {
-            'Content-Type': 'application/json'
+      // console.log(newData);
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
+          newData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        }
-        ).then((res) => {
-          toast.success(res.data.message)
-        }).catch((err) => {
-          toast.error(err.response.data.error)
-        
+        )
+        .then((res) => {
+          toast.success(res.data.message);
         })
-     
-      
-      
+        .catch((err) => {
+          toast.error(err.response.data.error);
+        });
+
       setSave(false);
     }
   }, [save]);
@@ -287,5 +333,29 @@ const curr_labels = [
   "Posterior Wall",
   "Eustachian Tube Orifice",
   "Interpretation",
+  "Impression",
+];
+const ear_labels = [
+  "Oral Cavity",
+  "Hard Palate",
+  "Soft Palate",
+  "Uvula",
+  "Posterior 1/3rd of Tongue",
+  "Epiglottis",
+  "Vallecula",
+  "Pharyngoepiglottic Fold",
+  "Aryepiglottic Fold (AE Fold)",
+  "Arytnoids",
+  "Ventricular Band",
+  "Vocal Cord",
+  "Posterior Pharyngeal Wall",
+  "Sub-Glottis",
+  "Other Findings",
+  "Impression",
+  "EAR",
+  "EAC",
+  "Tympanic Membrane",
+  "Pars Flaccida",
+  "Pars Tensa",
   "Impression",
 ];
