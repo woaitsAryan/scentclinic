@@ -110,39 +110,48 @@ const ReportBase = ({
         Pars_Tensa: data.reportData["Pars Tensa"],
         Impression_Ear: data.reportData["Impression"],
       };
-      let newData;
+      let newData: any;
       if (reportType === "Nose") {
         newData = {
+          reportType,
           reportName,
           patientData,
           reportData: actualdata,
         };
       } else {
         newData = {
+          reportType,
           reportName,
           patientData,
           reportData: actualEarData,
         };
       }
-      // console.log(newData);
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
-          newData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          toast.success(res.data.message);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error);
-        });
 
-      setSave(false);
+      const sendRequest = async () => {
+        try{
+        await axios
+          .post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
+            newData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            toast.success(res.data.message);
+          })
+          .catch((err) => {
+            toast.error(err.response.data.error);
+          });
+        }catch(err){
+          console.log(err);
+        }
+        setSave(false);
+      }
+      sendRequest();
+
     }
   }, [save]);
   const generatePdf = async () => {

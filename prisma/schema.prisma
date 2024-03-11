@@ -14,32 +14,63 @@ datasource db {
 }
 
 model Patient {
-  id           String   @id @default(cuid())
-  patient_name String
-  age          String
-  sex          String
-  Reports      Report[]
+  id              String            @id @default(cuid())
+  patient_name    String
+  age             String
+  sex             String
+  NoseReport      NoseReport[]
+  ThroatEarReport ThroatEarReport[]
 }
 
-model Report {
-  id                      String   @id @default(cuid())
-  reportName              String
-  patientID               String
-  patient                 Patient  @relation(fields: [patientID], references: [id])
-  createdAt               DateTime @default(now())
-  rightNasalCavity        String
-  inferiorTurbinateMeatus String
-  middleTurbinateMeatus   String
-  uncinateProcess         String
-  superiorTurbinateMeatus String
-  sphenoethmoidalRecess   String
-  leftNasalCavity         String
-  bulla                   String
-  septum                  String
-  nasopharynx             String
-  roof                    String
-  posteriorWall           String
-  eustachianTubeOrifice   String
-  interpretation          String
-  impression              String
+model NoseReport {
+  id                            String   @id @default(cuid())
+  reportName                    String
+  patientID                     String
+  patient                       Patient  @relation(fields: [patientID], references: [id])
+  createdAt                     DateTime @default(now())
+  Right_Naasal_Cavity           String
+  Inferior_Turbinate_and_Meatus String
+  Middle_Turbinate_and_Meatus   String
+  Uncinate_Process              String
+  Superior_Turbinate_and_Meatus String
+  Sphenoethmoidal_Recess        String
+  Left_Nasal_Cavity             String
+  Bulla                         String
+  Septum                        String
+  Nasopharynx                   String
+  Roof                          String
+  Posterior_Wall                String
+  Eustachian_Tube_Orifice       String
+  Interpretation                String
+  Impression                    String
+}
+
+model ThroatEarReport {
+  id                        String   @id @default(cuid())
+  reportName                String
+  patientID                 String
+  patient                   Patient  @relation(fields: [patientID], references: [id])
+  createdAt                 DateTime @default(now())
+  Oral_Cavity               String
+  Hard_Palate               String
+  Soft_Palate               String
+  Uvula                     String
+  Posterior_Of_Tongue       String
+  Epiglottis                String
+  Vallecula                 String
+  Pharyngoepiglottic_Fold   String
+  Aryepiglottic_Fold        String
+  Arytnoids                 String
+  Ventricular_Band          String
+  Vocal_Cord                String
+  Posterior_Pharyngeal_Wall String
+  Sub_Glottis               String
+  Other_Findings            String
+  Impression_Throat         String
+  EAR                       String
+  EAC                       String
+  Tympanic_Membrane         String
+  Pars_Flaccida             String
+  Pars_Tensa                String
+  Impression_Ear            String
 }
