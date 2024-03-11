@@ -6,8 +6,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import FieldModal from "../components/FieldModal";
 import axios from "axios";
-import { toast } from "react-toastify";
-
+import { toast, ToastContainer } from "react-toastify";
 type ReportData = {
   reportName: string;
   patientData: {
@@ -128,30 +127,29 @@ const ReportBase = ({
       }
 
       const sendRequest = async () => {
-        try{
-        await axios
-          .post(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
-            newData,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          )
-          .then((res) => {
-            toast.success(res.data.message);
-          })
-          .catch((err) => {
-            toast.error(err.response.data.error);
-          });
-        }catch(err){
+        try {
+          await axios
+            .post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
+              newData,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              toast.success(res.data.message);
+            })
+            .catch((err) => {
+              toast.error(err.response.data.error);
+            });
+        } catch (err) {
           console.log(err);
         }
         setSave(false);
-      }
+      };
       sendRequest();
-
     }
   }, [save]);
   const generatePdf = async () => {
@@ -188,6 +186,7 @@ const ReportBase = ({
   }, [savePdf, zoom]);
   return (
     <div className="wrapper w-full flex justify-center items-start py-4 font-poppins relative">
+      <ToastContainer />
       <div
         id="pdf-content"
         className="aspect-[210/297] border-0 bg-white border-[#aeaeae70] shadow-xl relative"

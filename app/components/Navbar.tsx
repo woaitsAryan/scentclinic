@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { IoSaveOutline } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
+import Link from "next/link";
 interface Props {
   setSave: React.Dispatch<React.SetStateAction<boolean>>;
   reportName: string;
@@ -50,12 +51,20 @@ const Navbar = ({
         </select>
         <button
           type="button"
-          className="flex gap-2 bg-light text-white px-6 py-2 rounded-lg font-medium text-lg items-center active:scale-95 transition-all duration-200 ease-linear"
+          className="flex gap-2 bg-primary text-white px-6 py-2 rounded-lg font-medium text-lg items-center active:scale-95 transition-all duration-200 ease-linear"
           onClick={() => setSave(true)}
         >
           <FaSave size={20} />
           <p>Save</p>
         </button>
+        <Link href="/find">
+          <button
+            type="button"
+            className="flex gap-2 bg-primary text-white px-6 py-2 rounded-lg font-medium text-lg items-center active:scale-95 transition-all duration-200 ease-linear"
+          >
+            <p>See All Reports</p>
+          </button>
+        </Link>
       </div>
     </div>
   );
