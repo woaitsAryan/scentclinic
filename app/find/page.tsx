@@ -11,7 +11,8 @@ const FindPage = () => {
   const [type, setType] = useState<string>("Nose");
   const [patientName, setPatientName] = useState<string>("");
   const [reportName, setReportName] = useState<string>("");
-
+  const [searchDate, setSearchDate] = useState<string>("");
+  
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
@@ -39,13 +40,13 @@ const FindPage = () => {
   const handleSearch = async () => {
     if (type === "Nose") {
       const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findNose?patient_name=${patientName}&reportName=${reportName}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findNose?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
       );
       setNoseData(result.data.data);
       return;
     }
     const result = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
     );
     setEarThroatData(result.data.data);
   };
@@ -81,6 +82,24 @@ const FindPage = () => {
               type="text"
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
+              className="w-[75%] outline-none border-2 border-[#e0e0e0] rounded-lg rounded-r-none border-r-0 px-2 py-2"
+            />
+            <button
+              onClick={handleSearch}
+              className="w-[25%] bg-primary text-white rounded-lg rounded-l-none"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="search">Search by Day:</label>
+          <div className="flex">
+            <input
+              id="search"
+              type="date"
+              value={searchDate}
+              onChange={(e) => setSearchDate(e.target.value)}
               className="w-[75%] outline-none border-2 border-[#e0e0e0] rounded-lg rounded-r-none border-r-0 px-2 py-2"
             />
             <button

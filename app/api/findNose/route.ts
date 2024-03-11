@@ -10,10 +10,13 @@ export async function GET(req: NextRequest) {
         let filterQuery: { [key: string]: any } = {};
         const page = parseInt(req.nextUrl.searchParams.get('page') || "0")
         const limit = parseInt(req.nextUrl.searchParams.get('limit') || "20")
-        const startDate = req.nextUrl.searchParams.get('startDate')
-        const endDate = req.nextUrl.searchParams.get('endDate')
-
-        filterQuery = filterDate(filterQuery, startDate, endDate)
+        const date = req.nextUrl.searchParams.get('date')
+        // const endDate = req.nextUrl.searchParams.get('endDate')
+        if(date){
+            filterQuery = filterDate(filterQuery, new Date(date))
+        }
+        console.log(date)
+        console.log(filterQuery)
 
         allowedParameters.forEach((parameter: string) => {
             var value = req.nextUrl.searchParams.get(parameter)
