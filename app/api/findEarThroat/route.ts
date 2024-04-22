@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         const startDate = req.nextUrl.searchParams.get('startDate')
         const endDate = req.nextUrl.searchParams.get('endDate')
 
-        filterQuery = filterDate(filterQuery, startDate, endDate)
+        // filterQuery = filterDate(filterQuery, new Date(startDate))
 
         allowedParameters.forEach((parameter: string) => {
             var value = req.nextUrl.searchParams.get(parameter)

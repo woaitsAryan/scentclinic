@@ -26,7 +26,7 @@ const PatientCard = ({
         <p>Name: {patient_name}</p>
         <p>Age: {age}</p>
         <p>Sex: {sex}</p>
-        <p>Created At: {date_creation}</p>
+        <p>Created At: {new Date(item.createdAt).toLocaleString().split(",")[0]}</p>
         <button
           type="button"
           className="w-full py-2 bg-primary text-white rounded-lg"

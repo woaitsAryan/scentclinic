@@ -16,10 +16,10 @@ async function generateFakeData() {
     }
 
 
-    await prisma.prescription.createMany({
-        data: fakedData,
-        skipDuplicates: true
-    })
+    // await prisma.noseReport.createMany({
+    //     data: fakedData,
+    //     skipDuplicates: true
+    // })
     console.log("Faked data created!")
 }
 generateFakeData()
