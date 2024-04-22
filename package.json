@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fake": "NODE_OPTIONS='--no-warnings' node --loader ts-node/esm ./prisma/seed.ts"
+    "fake": "NODE_OPTIONS='--no-warnings' node --loader ts-node/esm ./prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
