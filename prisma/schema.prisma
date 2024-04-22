@@ -51,26 +51,26 @@ model ThroatEarReport {
   patientID                 String
   patient                   Patient  @relation(fields: [patientID], references: [id])
   createdAt                 DateTime @default(now())
-  Oral_Cavity               String
-  Hard_Palate               String
-  Soft_Palate               String
-  Uvula                     String
-  Posterior_Of_Tongue       String
-  Epiglottis                String
-  Vallecula                 String
-  Pharyngoepiglottic_Fold   String
-  Aryepiglottic_Fold        String
-  Arytnoids                 String
-  Ventricular_Band          String
-  Vocal_Cord                String
-  Posterior_Pharyngeal_Wall String
-  Sub_Glottis               String
-  Other_Findings            String
-  Impression_Throat         String
-  EAR                       String
-  EAC                       String
-  Tympanic_Membrane         String
-  Pars_Flaccida             String
-  Pars_Tensa                String
-  Impression_Ear            String
+  Oral_Cavity               String @default("")
+  Hard_Palate               String @default("")
+  Soft_Palate               String @default("")
+  Uvula                     String @default("")
+  Posterior_Of_Tongue       String @default("")
+  Epiglottis                String @default("")
+  Vallecula                 String @default("")
+  Pharyngoepiglottic_Fold   String @default("")
+  Aryepiglottic_Fold        String @default("")
+  Arytnoids                 String @default("")
+  Ventricular_Band          String @default("")
+  Vocal_Cord                String @default("")
+  Posterior_Pharyngeal_Wall String @default("")
+  Sub_Glottis               String @default("")
+  Other_Findings            String @default("") 
+  Impression_Throat         String @default("")
+  EAR                       String @default("")
+  EAC                       String @default("")
+  Tympanic_Membrane         String @default("")
+  Pars_Flaccida             String @default("")
+  Pars_Tensa                String @default("")
+  Impression_Ear            String @default("")
 }
