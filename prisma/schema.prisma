@@ -28,21 +28,21 @@ model NoseReport {
   patientID                     String
   patient                       Patient  @relation(fields: [patientID], references: [id])
   createdAt                     DateTime @default(now())
-  Right_Naasal_Cavity           String
-  Inferior_Turbinate_and_Meatus String
-  Middle_Turbinate_and_Meatus   String
-  Uncinate_Process              String
-  Superior_Turbinate_and_Meatus String
-  Sphenoethmoidal_Recess        String
-  Left_Nasal_Cavity             String
-  Bulla                         String
-  Septum                        String
-  Nasopharynx                   String
-  Roof                          String
-  Posterior_Wall                String
-  Eustachian_Tube_Orifice       String
-  Interpretation                String
-  Impression                    String
+  Right_Naasal_Cavity           String @default("")
+  Inferior_Turbinate_and_Meatus String @default("")
+  Middle_Turbinate_and_Meatus   String @default("")
+  Uncinate_Process              String @default("")
+  Superior_Turbinate_and_Meatus String @default("")
+  Sphenoethmoidal_Recess        String @default("")
+  Left_Nasal_Cavity             String @default("")
+  Bulla                         String @default("")
+  Septum                        String @default("")
+  Nasopharynx                   String @default("")
+  Roof                          String @default("")
+  Posterior_Wall                String @default("")
+  Eustachian_Tube_Orifice       String @default("")
+  Interpretation                String @default("")
+  Impression                    String @default("")
 }
 
 model ThroatEarReport {
