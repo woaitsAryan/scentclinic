@@ -16,7 +16,7 @@ const FindPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findNose`
+        `/api/findNose`
       );
       setNoseData(result.data.data);
     };
@@ -26,7 +26,7 @@ const FindPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findEarThroat`
+        `/api/findEarThroat`
       );
       setEarThroatData(result.data.data);
     };
@@ -40,13 +40,13 @@ const FindPage = () => {
   const handleSearch = async () => {
     if (type === "Nose") {
       const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findNose?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
+        `/api/findNose?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
       );
       setNoseData(result.data.data);
       return;
     }
     const result = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
+      `/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
     );
     setEarThroatData(result.data.data);
   };

@@ -130,7 +130,7 @@ const ReportBase = ({
         try {
           await axios
             .post(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prescription`,
+              `/api/prescription`,
               newData,
               {
                 headers: {
