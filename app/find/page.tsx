@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PatientCard from "../components/PatientCard";
 import Image from "next/image";
-
+import Cookies from "js-cookie";
 const FindPage = () => {
   const [noseData, setNoseData] = useState<any[]>([]);
   const [earThroatData, setEarThroatData] = useState<any[]>([]);
@@ -12,22 +12,28 @@ const FindPage = () => {
   const [patientName, setPatientName] = useState<string>("");
   const [reportName, setReportName] = useState<string>("");
   const [searchDate, setSearchDate] = useState<string>("");
-  
+
   useEffect(() => {
+    const key = Cookies.get("secretKey");
     const fetchData = async () => {
-      const result = await axios.get(
-        `/api/findNose`
-      );
+      const result = await axios.get(`/api/findNose`, {
+        headers: {
+          Authorization: key,
+        },
+      });
       setNoseData(result.data.data);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
+    const key = Cookies.get("secretKey");
     const fetchData = async () => {
-      const result = await axios.get(
-        `/api/findEarThroat`
-      );
+      const result = await axios.get(`/api/findEarThroat`, {
+        headers: {
+          Authorization: key,
+        },
+      });
       setEarThroatData(result.data.data);
     };
     fetchData();
@@ -38,15 +44,26 @@ const FindPage = () => {
   };
 
   const handleSearch = async () => {
+    const key = Cookies.get("secretKey");
     if (type === "Nose") {
       const result = await axios.get(
-        `/api/findNose?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
+        `/api/findNose?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`,
+        {
+          headers: {
+            Authorization: key,
+          },
+        }
       );
       setNoseData(result.data.data);
       return;
     }
     const result = await axios.get(
-      `/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`
+      `/api/findEarThroat?patient_name=${patientName}&reportName=${reportName}&date=${searchDate}`,
+      {
+        headers: {
+          Authorization: key,
+        },
+      }
     );
     setEarThroatData(result.data.data);
   };

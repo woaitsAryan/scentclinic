@@ -20,6 +20,7 @@
     "html2canvas": "^1.4.1",
     "html2pdf-ts": "^1.1.1",
     "html2pdf.js": "^0.9.0",
+    "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
     "next": "14.1.0",
     "next-auth": "^4.24.6",
@@ -28,12 +29,15 @@
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "react-toastify": "^10.0.4",
+    "sha256": "^0.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18",
+    "@types/sha256": "^0.2.2",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",

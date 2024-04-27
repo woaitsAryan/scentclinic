@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 import FieldModal from "../components/FieldModal";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import Cookies from "js-cookie";
 type ReportData = {
   reportName: string;
   patientData: {
@@ -35,7 +36,7 @@ const ReportBase = ({
   const [savePdf, setSavePdf] = useState(false);
   const [addNewField, setAddNewField] = useState(false);
   const [labels, setLabels] = useState<string[]>(curr_labels);
-
+  const date = new Date();
   useEffect(() => {
     if (reportType === "Nose") {
       setLabels(curr_labels);
@@ -47,6 +48,7 @@ const ReportBase = ({
     patient_name: "",
     age: "",
     sex: "",
+    patient_id: "",
   });
   const [reportData, setReportData] = useState({});
   useEffect(() => {
@@ -127,17 +129,15 @@ const ReportBase = ({
       }
 
       const sendRequest = async () => {
+        const key = Cookies.get("secretKey");
         try {
           await axios
-            .post(
-              `/api/prescription`,
-              newData,
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            )
+            .post(`/api/prescription`, newData, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: key,
+              },
+            })
             .then((res) => {
               toast.success(res.data.message);
             })
@@ -268,6 +268,31 @@ const ReportBase = ({
                     setPatientData({
                       ...patientData,
                       sex: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="flex gap-2 h-full items-center w-fit">
+                <label htmlFor="patient_id" className=" text-nowrap">
+                  ID: {date.getFullYear()}
+                  {date.getMonth().toLocaleString().length < 2
+                    ? `0${date.getMonth()}`
+                    : date.getMonth()}
+                </label>
+                <input
+                  type="text"
+                  name="patient_id"
+                  id=""
+                  autoCapitalize="off"
+                  className="w-16 h-full outline-none"
+                  onChange={(e) =>
+                    setPatientData({
+                      ...patientData,
+                      patient_id: `${date.getFullYear()}${
+                        date.getMonth().toLocaleString().length < 2
+                          ? `0${date.getMonth()}`
+                          : date.getMonth()
+                      }${e.target.value}`,
                     })
                   }
                 />
