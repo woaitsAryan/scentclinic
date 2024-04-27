@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 const PatientDataSchema = z.object({
     patient_name: z.string(),
+    patient_id : z.string(),
     age: z.string(),
     sex: z.string(),
 });

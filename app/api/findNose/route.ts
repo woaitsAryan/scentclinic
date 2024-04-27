@@ -6,6 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 const allowedParameters = ['premedication', 'reportName']
 
 export async function GET(req: NextRequest) {
+
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader || authHeader !== process.env.PASSWORD_HASH) {
+        return NextResponse.json({ success: false, message: "Unauthorized", data: [] }, { status: 401 });
+    }
     try {
         let filterQuery: { [key: string]: any } = {};
         const page = parseInt(req.nextUrl.searchParams.get('page') || "0")

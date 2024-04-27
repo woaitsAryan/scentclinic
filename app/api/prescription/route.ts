@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(req: NextRequest) {
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader || authHeader !== process.env.PASSWORD_HASH) {
+        return NextResponse.json({ success: false, message: "Unauthorized", data: [] }, { status: 401 });
+    }
     try {
         const body = await req.json();
 
@@ -18,6 +22,7 @@ export async function POST(req: NextRequest) {
                         { patient_name: validatedData.data.patientData.patient_name },
                         { age: validatedData.data.patientData.age },
                         { sex: validatedData.data.patientData.sex },
+                        {patient_id: validatedData.data.patientData.patient_id}
                     ]
                 }
             })
@@ -59,6 +64,7 @@ export async function POST(req: NextRequest) {
                         { patient_name: validatedData.data.patientData.patient_name },
                         { age: validatedData.data.patientData.age },
                         { sex: validatedData.data.patientData.sex },
+                        {patient_id: validatedData.data.patientData.patient_id}
                     ]
                 }
             })
