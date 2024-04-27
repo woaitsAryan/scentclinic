@@ -11,7 +11,9 @@ const Login = ({
 }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  async function handleLogin(e) {
+  async function handleLogin(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     e.preventDefault();
     try {
       if (!username) {
